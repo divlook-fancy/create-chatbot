@@ -48,7 +48,7 @@ router.post('/message', async (req, res, next) => {
   if (/할?.?줄?.?아는게.?[뭐{냐|야|니|여|지}|있{냐|나|니|어|엉}]\??|심심.?해|놀아줘|뭐할까/.test(param.content)) {
     result.message.text = '원하는 버튼을 선택해줘'
     result.keyboard.type = 'buttons'
-    result.keyboard.buttons = ['안녕 *^_^*', '표준몸무게']
+    result.keyboard.buttons = ['안녕', '표준몸무게']
     res.json(result)
     return
   }
@@ -66,17 +66,20 @@ router.post('/message', async (req, res, next) => {
 
   // 기본값
   let randomText = [
-    `${param.user_key || '친구'}!! 안뇽~`,
-    '아직 성장 중이야. 조금만 기다려!',
-    '천천히 말하라구',
+    `안뇽~`,
+    '나는야 월루~~. 너도 월루?!',
+    '응???',
     '아직 할 줄 아는게 많이 없어',
-    '빨리 성장할게\n기대하라구!!',
-    `너는 이름이... ${param.user_key ? `${param.user_key}구나!` : '뭐야?'}\n나는 차차봇이야^^`,
+    '곧 새로운 기능이 생길거야\n기대하라구!!',
   ]
   let randomIndex = Math.floor(Math.random() * 10) % randomText.length
   res.json({
     message: {
       text: randomText[randomIndex],
+    },
+    keyboard: {
+      type: Math.floor(Math.random() * 10) % 2 ? 'text' :'buttons',
+      buttons: ['안녕', '표준몸무게'],
     },
   })
 })

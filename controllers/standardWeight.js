@@ -134,7 +134,7 @@ const chatGetHeight = ({ req, res, next }, { param, result, eventClass }) => {
   switch (param.content) {
     case '좋아':
       req.app.set('event', 'standardWeight1')
-      result.message.text = `${param.user_key}의 키를 입력해줘 (cm)\n그만하고 싶으면 '안해'라고 입력해줘`
+      result.message.text = `키를 입력해줘 (cm)\n그만하고 싶으면 '안해'라고 입력해줘`
       break
     default:
       req.app.set('event', null)
@@ -151,7 +151,7 @@ const chatGetWeight = ({ req, res, next }, { param, result, eventClass }) => {
   } else {
     eventClass.getHeight(param.content)
     req.app.set('event', 'standardWeight2')
-    result.message.text = `${param.user_key}의 몸무게를 입력해줘 (kg)\n그만하고 싶으면 '안해'라고 입력해줘`
+    result.message.text = `몸무게를 입력해줘 (kg)\n그만하고 싶으면 '안해'라고 입력해줘`
   }
   return result
 }
@@ -162,7 +162,7 @@ const chatGetGender = ({ req, res, next }, { param, result, eventClass }) => {
   } else {
     eventClass.getWeight(param.content)
     req.app.set('event', 'standardWeight3')
-    result.message.text = `${param.user_key}의 성별을 입력해줘\n한번만 더 하면 돼. 그냥 하자 ^^`
+    result.message.text = `성별을 입력해줘\n한번만 더 하면 돼. 그냥 하자 ^^`
     result.keyboard.type = 'buttons'
     result.keyboard.buttons = ['남자', '여자']
   }
@@ -189,7 +189,7 @@ const chatGetResult = ({ req, res, next }, { param, result, eventClass }) => {
 
 const chatIsNaN = ({ param, result}) => {
   let randomText = [
-    `숫자를 입력해 달라구 ${param.user_key || '친구'}!!`,
+    `숫자를 입력해 달라구!!`,
     '숫자가 아니잖아!!',
     '숫자를 입력해줘',
     '숫자숫자..숫자숫자숫자..숫자..숫자숫자...',
