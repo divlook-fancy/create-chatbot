@@ -39,7 +39,7 @@ router.post('/message', async (req, res, next) => {
   }
 
   if (/안녕/.test(param.content)) {
-    result.message.text = `응 안녕! ${param.user_key}`
+    result.message.text = `응 안녕!`
     res.json(result)
     return
   }
@@ -57,9 +57,7 @@ router.post('/message', async (req, res, next) => {
   for (let i = 0, len = controllers.length; i < len; i++) {
     let el = controllers[i]({ req, res, next }, { param, result })
     if (el !== false) {
-      req = el.req
-      result = el.result
-      res.json(result)
+      res.json(el)
       exit = true
       break
     }

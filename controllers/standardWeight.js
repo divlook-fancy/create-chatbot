@@ -96,25 +96,25 @@ BMI : ${this.BMI}
 // new StandardWeight()
 
 const chatStart = ({ req, res, next }, { param, result }) => {
-  let eventCheck = /^standardWeight/.test(req.app.get('event'))
+  let eventCheck = /^standardWeight/.test(req.app.get(`event:${param.user_key}`))
   let contentCheck = /체중|몸무게|비만/.test(param.content)
 
   if (!eventCheck && contentCheck) {
     return chatQuestion({ req, res, next }, { param, result })
   } else if (eventCheck) {
-    let eventClass = req.app.get('eventClass')
+    let eventClass = req.app.get(`eventClass:${param.user_key}`)
     if (param.content === '안해') {
-      req.app.set('event', null)
-      req.app.set('eventClass', null)
+      req.app.set(`event:${param.user_key}`, null)
+      req.app.set(`eventClass:${param.user_key}`, null)
       result.message.text = 'ㅇㅅㅇ'
-      return { req, result }
-    } else if (/^standardWeight$/.test(req.app.get('event'))) {
+      return result
+    } else if (/^standardWeight$/.test(req.app.get(`event:${param.user_key}`))) {
       return chatGetHeight({ req, res, next }, { param, result, eventClass })
-    } else if (/^standardWeight1$/.test(req.app.get('event'))) {
+    } else if (/^standardWeight1$/.test(req.app.get(`event:${param.user_key}`))) {
       return chatGetWeight({ req, res, next }, { param, result, eventClass })
-    } else if (/^standardWeight2$/.test(req.app.get('event'))) {
+    } else if (/^standardWeight2$/.test(req.app.get(`event:${param.user_key}`))) {
       return chatGetGender({ req, res, next }, { param, result, eventClass })
-    } else if (/^standardWeight3$/.test(req.app.get('event'))) {
+    } else if (/^standardWeight3$/.test(req.app.get(`event:${param.user_key}`))) {
       return chatGetResult({ req, res, next }, { param, result, eventClass })
     }
   }
@@ -122,29 +122,29 @@ const chatStart = ({ req, res, next }, { param, result }) => {
 }
 
 const chatQuestion = ({ req, res, next }, { param, result }) => {
-  req.app.set('event', 'standardWeight')
-  req.app.set('eventClass', new StandardWeight())
+  req.app.set(`event:${param.user_key}`, 'standardWeight')
+  req.app.set(`eventClass:${param.user_key}`, new StandardWeight())
   result.message.text = '표준몸무게 알아볼까?'
   result.keyboard = {
     type: 'buttons',
     buttons: ['좋아', '아니'],
   }
-  return { req, result }
+  return result
 }
 
 const chatGetHeight = ({ req, res, next }, { param, result, eventClass }) => {
   switch (param.content) {
     case '좋아':
-      req.app.set('event', 'standardWeight1')
+      req.app.set(`event:${param.user_key}`, 'standardWeight1')
       result.message.text = `키를 입력해줘 (cm)\n그만하고 싶으면 '안해'라고 입력해줘`
       break
     default:
-      req.app.set('event', null)
-      req.app.set('eventClass', null)
+      req.app.set(`event:${param.user_key}`, null)
+      req.app.set(`eventClass:${param.user_key}`, null)
       result.message.text = '구래!!!!'
       break
   }
-  return { req, result }
+  return result
 }
 
 const chatGetWeight = ({ req, res, next }, { param, result, eventClass }) => {
@@ -152,10 +152,10 @@ const chatGetWeight = ({ req, res, next }, { param, result, eventClass }) => {
     result.message.text = chatIsNaN({ param, result })
   } else {
     eventClass.getHeight(param.content)
-    req.app.set('event', 'standardWeight2')
+    req.app.set(`event:${param.user_key}`, 'standardWeight2')
     result.message.text = `몸무게를 입력해줘 (kg)\n그만하고 싶으면 '안해'라고 입력해줘`
   }
-  return { req, result }
+  return result
 }
 
 const chatGetGender = ({ req, res, next }, { param, result, eventClass }) => {
@@ -163,14 +163,14 @@ const chatGetGender = ({ req, res, next }, { param, result, eventClass }) => {
     result.message.text = chatIsNaN({ param, result })
   } else {
     eventClass.getWeight(param.content)
-    req.app.set('event', 'standardWeight3')
+    req.app.set(`event:${param.user_key}`, 'standardWeight3')
     result.message.text = `성별을 입력해줘\n한번만 더 하면 돼. 그냥 하자 ^^`
     result.keyboard = {
       type: 'buttons',
       buttons: ['남자', '여자'],
     }
   }
-  return { req, result }
+  return result
 }
 
 const chatGetResult = ({ req, res, next }, { param, result, eventClass }) => {
@@ -185,10 +185,10 @@ const chatGetResult = ({ req, res, next }, { param, result, eventClass }) => {
   }
   eventClass.getGender(gender)
   eventClass.getStandard()
-  req.app.set('event', null)
-  req.app.set('eventClass', null)
+  req.app.set(`event:${param.user_key}`, null)
+  req.app.set(`eventClass:${param.user_key}`, null)
   result.message.text = eventClass.message
-  return { req, result }
+  return result
 }
 
 const chatIsNaN = ({ param, result}) => {
