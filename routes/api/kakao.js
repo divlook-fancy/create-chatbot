@@ -39,7 +39,7 @@ router.post('/message', async (req, res, next) => {
   }
 
   if (/안녕/.test(param.content)) {
-    result.message.text = '응 안녕!'
+    result.message.text = `응 안녕! ${param.user_key}`
     res.json(result)
     return
   }
