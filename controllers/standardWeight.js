@@ -125,8 +125,10 @@ const chatQuestion = ({ req, res, next }, { param, result }) => {
   req.app.set('event', 'standardWeight')
   req.app.set('eventClass', new StandardWeight())
   result.message.text = '표준몸무게 알아볼까?'
-  result.keyboard.type = 'buttons'
-  result.keyboard.buttons = ['좋아', '아니']
+  result.keyboard = {
+    type: 'buttons',
+    buttons: ['좋아', '아니'],
+  }
   return { req, result }
 }
 
@@ -163,8 +165,10 @@ const chatGetGender = ({ req, res, next }, { param, result, eventClass }) => {
     eventClass.getWeight(param.content)
     req.app.set('event', 'standardWeight3')
     result.message.text = `성별을 입력해줘\n한번만 더 하면 돼. 그냥 하자 ^^`
-    result.keyboard.type = 'buttons'
-    result.keyboard.buttons = ['남자', '여자']
+    result.keyboard = {
+      type: 'buttons',
+      buttons: ['남자', '여자'],
+    }
   }
   return { req, result }
 }

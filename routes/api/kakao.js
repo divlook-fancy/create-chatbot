@@ -18,7 +18,6 @@ router.post('/message', async (req, res, next) => {
    */
   let result = {
     message: {},
-    keyboard: {}
   }
 
   /**
@@ -47,8 +46,10 @@ router.post('/message', async (req, res, next) => {
 
   if (/할?.?줄?.?아는게.?[뭐{냐|야|니|여|지}|있{냐|나|니|어|엉}]\??|심심.?해|놀아줘|뭐할까/.test(param.content)) {
     result.message.text = '원하는 버튼을 선택해줘'
-    result.keyboard.type = 'buttons'
-    result.keyboard.buttons = ['안녕', '표준몸무게']
+    result.keyboard = {
+      type: 'buttons',
+      buttons: ['안녕', '표준몸무게'],
+    }
     res.json(result)
     return
   }
