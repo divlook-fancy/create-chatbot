@@ -6,10 +6,9 @@
 
 const express = require('express')
 const router = express.Router()
-const controllers = [
-  require('../../controllers/standardWeight')
-]
+const controllers = [require('../../controllers/standardWeight')]
 
+// Message 입력
 router.post('/message', async (req, res, next) => {
   let exit = false
 
@@ -44,7 +43,11 @@ router.post('/message', async (req, res, next) => {
     return
   }
 
-  if (/할?.?줄?.?아는게.?[뭐{냐|야|니|여|지}|있{냐|나|니|어|엉}]\??|심심.?해|놀아줘|뭐할까/.test(param.content)) {
+  if (
+    /할?.?줄?.?아는게.?[뭐{냐|야|니|여|지}|있{냐|나|니|어|엉}]\??|심심.?해|놀아줘|뭐할까/.test(
+      param.content
+    )
+  ) {
     result.message.text = '원하는 버튼을 선택해줘'
     result.keyboard = {
       type: 'buttons',
@@ -93,6 +96,7 @@ router.post('/message', async (req, res, next) => {
   }
 })
 
+// 처음 진입시
 router.get('/keyboard', async (req, res, next) => {
   /**
    * @type {TypeKeyboard}
@@ -103,6 +107,29 @@ router.get('/keyboard', async (req, res, next) => {
   }
   res.json(result)
 })
+
+// 친구 추가시
+router.post('/friend', (req, res, next) => {
+  let { user_key } = req.body
+  // 아무것도 안함
+  res.send()
+})
+
+// 친구 차단시
+router.delete('/friend', (req, res, next) => {
+  let { user_key } = req.body
+  req.app.set(`event:${user_key}`, null)
+  req.app.set(`eventClass:${user_key}`, null)
+  res.send()
+})
+
+// 채팅방 나갔을 때
+router.delete('/chat_room/:user_key', (req, res, next) => {
+  let { user_key } = req.params
+  req.app.set(`event:${user_key}`, null)
+  req.app.set(`eventClass:${user_key}`, null)
+  res.send()
+});
 
 module.exports = router
 
