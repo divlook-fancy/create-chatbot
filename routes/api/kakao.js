@@ -73,15 +73,23 @@ router.post('/message', async (req, res, next) => {
     '곧 새로운 기능이 생길거야\n기대하라구!!',
   ]
   let randomIndex = Math.floor(Math.random() * 10) % randomText.length
-  res.json({
-    message: {
-      text: randomText[randomIndex],
-    },
-    keyboard: {
-      type: Math.floor(Math.random() * 10) % 2 ? 'text' :'buttons',
-      buttons: ['안녕', '표준몸무게'],
-    },
-  })
+  if (Math.floor(Math.random() * 10) % 2) {
+    res.json({
+      message: {
+        text: randomText[randomIndex],
+      },
+    })
+  } else {
+    res.json({
+      message: {
+        text: randomText[randomIndex],
+      },
+      keyboard: {
+        type: 'buttons',
+        buttons: ['안녕', '표준몸무게'],
+      },
+    })
+  }
 })
 
 router.get('/keyboard', async (req, res, next) => {
