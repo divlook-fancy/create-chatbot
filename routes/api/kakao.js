@@ -18,10 +18,6 @@ router.post('/message', async (req, res, next) => {
    */
   let result = {
     message: {},
-    keyboard: {
-      type: 'buttons',
-      buttons: ['할 줄 아는게 뭐야?'],
-    }
   }
 
   /**
