@@ -56,7 +56,9 @@ router.post('/message', async (req, res, next) => {
   for (let i = 0, len = controllers.length; i < len; i++) {
     let el = controllers[i]({ req, res, next }, { param, result })
     if (el !== false) {
-      res.json(el)
+      req = el.req
+      result = el.result
+      res.json(result)
       exit = true
       break
     }

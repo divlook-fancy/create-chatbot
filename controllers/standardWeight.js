@@ -107,7 +107,7 @@ const chatStart = ({ req, res, next }, { param, result }) => {
       req.app.set('event', null)
       req.app.set('eventClass', null)
       result.message.text = 'ㅇㅅㅇ'
-      return result
+      return { req, result }
     } else if (/^standardWeight$/.test(req.app.get('event'))) {
       return chatGetHeight({ req, res, next }, { param, result, eventClass })
     } else if (/^standardWeight1$/.test(req.app.get('event'))) {
@@ -127,7 +127,7 @@ const chatQuestion = ({ req, res, next }, { param, result }) => {
   result.message.text = '표준몸무게 알아볼까?'
   result.keyboard.type = 'buttons'
   result.keyboard.buttons = ['좋아', '아니']
-  return result
+  return { req, result }
 }
 
 const chatGetHeight = ({ req, res, next }, { param, result, eventClass }) => {
@@ -142,7 +142,7 @@ const chatGetHeight = ({ req, res, next }, { param, result, eventClass }) => {
       result.message.text = '구래!!!!'
       break
   }
-  return result
+  return { req, result }
 }
 
 const chatGetWeight = ({ req, res, next }, { param, result, eventClass }) => {
@@ -153,7 +153,7 @@ const chatGetWeight = ({ req, res, next }, { param, result, eventClass }) => {
     req.app.set('event', 'standardWeight2')
     result.message.text = `몸무게를 입력해줘 (kg)\n그만하고 싶으면 '안해'라고 입력해줘`
   }
-  return result
+  return { req, result }
 }
 
 const chatGetGender = ({ req, res, next }, { param, result, eventClass }) => {
@@ -166,7 +166,7 @@ const chatGetGender = ({ req, res, next }, { param, result, eventClass }) => {
     result.keyboard.type = 'buttons'
     result.keyboard.buttons = ['남자', '여자']
   }
-  return result
+  return { req, result }
 }
 
 const chatGetResult = ({ req, res, next }, { param, result, eventClass }) => {
@@ -184,7 +184,7 @@ const chatGetResult = ({ req, res, next }, { param, result, eventClass }) => {
   req.app.set('event', null)
   req.app.set('eventClass', null)
   result.message.text = eventClass.message
-  return result
+  return { req, result }
 }
 
 const chatIsNaN = ({ param, result}) => {
