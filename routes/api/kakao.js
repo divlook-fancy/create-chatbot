@@ -6,18 +6,19 @@
 
 const express = require('express')
 const router = express.Router()
+const controllers = [
+  require('../../controllers/standardWeight')
+]
 
 router.post('/message', async (req, res, next) => {
-  let textCheck = () => {
-    if (result.message.text) result.message.text += '\n'
-    else result.message.text = ''
-  }
+  let exit = false
 
   /**
    * @type {TypeResponse}
    */
   let result = {
     message: {},
+    keyboard: {}
   }
 
   /**
@@ -28,10 +29,6 @@ router.post('/message', async (req, res, next) => {
     type: req.body.type,
     content: req.body.content,
   }
-
-  console.log('user_key', param.user_key)
-  console.log('type', param.type)
-  console.log('content', param.content)
 
   if (param.type === 'photo') {
     res.json({
@@ -44,25 +41,44 @@ router.post('/message', async (req, res, next) => {
 
   if (/안녕/.test(param.content)) {
     result.message.text = '응 안녕!'
-  }
-
-  if (/할 줄 아는게 뭐야\?/.test(param.content)) {
-    textCheck()
-    result.message.text += '아직 없어'
-  }
-
-  if (!result.message.text) {
-    let randomText = ['안뇽', '아직 개발 중이야.', '아직 할 줄 아는게 없어', '조금만 기다려줘!\n빨리 성장할게']
-    let randomIndex = Math.floor(Math.random() * 10) % randomText.length
-    res.json({
-      message: {
-        text: randomText[randomIndex],
-      },
-    })
+    res.json(result)
     return
   }
 
-  res.json(result)
+  if (/할?.?줄?.?아는게.?[뭐{냐|야|니|여|지}|있{냐|나|니|어|엉}]\??|심심.?해|놀아줘|뭐할까/.test(param.content)) {
+    result.message.text = '원하는 버튼을 선택해줘'
+    result.keyboard.type = 'buttons'
+    result.keyboard.buttons = ['안녕 *^_^*', '표준몸무게']
+    res.json(result)
+    return
+  }
+
+  for (let i = 0, len = controllers.length; i < len; i++) {
+    let el = controllers[i]({ req, res, next }, { param, result })
+    if (el !== false) {
+      res.json(el)
+      exit = true
+      break
+    }
+  }
+
+  if (exit) return
+
+  // 기본값
+  let randomText = [
+    `${param.user_key || '친구'}!! 안뇽~`,
+    '아직 성장 중이야. 조금만 기다려!',
+    '천천히 말하라구',
+    '아직 할 줄 아는게 많이 없어',
+    '빨리 성장할게\n기대하라구!!',
+    `너는 이름이... ${param.user_key ? `${param.user_key}구나!` : '뭐야?'}\n나는 차차봇이야^^`,
+  ]
+  let randomIndex = Math.floor(Math.random() * 10) % randomText.length
+  res.json({
+    message: {
+      text: randomText[randomIndex],
+    },
+  })
 })
 
 router.get('/keyboard', async (req, res, next) => {
