@@ -40,13 +40,6 @@ router.post('/message', async (req, res, next) => {
       },
     })
     return
-  } else if (!(param.content.replace(/\s|\n/g, ''))) {
-    res.json({
-      message: {
-        text: '안뇽\n',
-      },
-    })
-    return
   }
 
   if (/안녕/.test(param.content)) {
@@ -56,6 +49,17 @@ router.post('/message', async (req, res, next) => {
   if (/할 줄 아는게 뭐야\?/.test(param.content)) {
     textCheck()
     result.message.text += '아직 없어'
+  }
+
+  if (!result.message.text) {
+    let randomText = ['안뇽', '아직 개발 중이야.', '아직 할 줄 아는게 없어', '조금만 기다려줘!\n빨리 성장할게']
+    let randomIndex = Math.floor(Math.random() * 10) % randomText.length
+    res.json({
+      message: {
+        text: randomText[randomIndex],
+      },
+    })
+    return
   }
 
   res.json(result)
