@@ -153,12 +153,13 @@ router.delete('/chat_room/:user_key', (req, res, next) => {
 })
 
 router.get('/log/:offset/:limit', async (req, res, next) => {
-  ChatLogsModel.table({
+  let result = await ChatLogsModel.table({
     limit: req.params.limit,
     offset: req.params.offset,
   })
-  req.json({
+  res.json({
     code: 0,
+    data: result,
     message: 'SUCCESS',
     comment: '정상 응답',
   })
@@ -166,7 +167,7 @@ router.get('/log/:offset/:limit', async (req, res, next) => {
 
 router.delete('/log/reset', async (req, res, next) => {
   ChatLogsModel.reset()
-  req.json({
+  res.json({
     code: 0,
     message: 'SUCCESS',
     comment: '정상 응답',
