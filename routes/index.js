@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
 
-router.use('/', require('./api/kakao'))
+router.use('/', require('./api/chat'))
 
 module.exports = router
