@@ -1,0 +1,10 @@
+server:
+    scheme: ftp
+    host: host
+    port: 21
+    user: name
+    pass: pw
+    path:
+        remote: chatbot-kakao/
+    include:
+        "pm2.config.js": ""
