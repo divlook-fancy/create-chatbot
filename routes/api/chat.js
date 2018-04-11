@@ -152,8 +152,11 @@ router.delete('/chat_room/:user_key', (req, res, next) => {
   })
 })
 
-router.get('/log', async (req, res, next) => {
-  ChatLogsModel.reset()
+router.get('/log/:offset/:limit', async (req, res, next) => {
+  ChatLogsModel.table({
+    limit: req.params.limit,
+    offset: req.params.offset,
+  })
   req.json({
     code: 0,
     message: 'SUCCESS',

@@ -31,8 +31,8 @@ class ChatLogsModelClass {
       },
       reg_date: {
         type: sequelize.DATE,
-        defaultValue: new Date()
-      }
+        defaultValue: new Date(),
+      },
     }
   }
   static modelOption() {
@@ -50,14 +50,26 @@ class ChatLogsModelClass {
         console.error('** Unable to connection database **\n', error)
       })
   }
-  insert(param) {
+  insert({ user_key, content }) {
     this.model.sync().then(() => {
-      this.model.create(param)
+      this.model.create({ user_key, content })
     })
   }
-  reset(param) {
+  reset() {
     this.model.sync({ force: true }).then(() => {
       this.model.truncate()
+    })
+  }
+  table({ offset, limit }) {
+    return new Promise(resolve => {
+      this.model.sync().then(() => {
+        resolve(
+          this.model.findAndCountAll({
+            offset: offset || 0,
+            limit: limit || 100,
+          })
+        )
+      })
     })
   }
 }
