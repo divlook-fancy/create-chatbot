@@ -7,6 +7,7 @@
 const express = require('express')
 const router = express.Router()
 const controllers = [require('../../controllers/standardWeight')]
+const { ChatLogsModel } = require('../../models/ChatLogs')
 
 // Message 입력
 router.post('/message', async (req, res, next) => {
@@ -29,6 +30,10 @@ router.post('/message', async (req, res, next) => {
   }
 
   console.log(`user: ${param.user_key}\ncontent: ${param.content}`)
+  ChatLogsModel.insert({
+    user_key: param.user_key,
+    content: param.content,
+  })
 
   if (param.type === 'photo') {
     res.json({
@@ -145,7 +150,25 @@ router.delete('/chat_room/:user_key', (req, res, next) => {
     message: 'SUCCESS',
     comment: '정상 응답',
   })
-});
+})
+
+router.get('/log', async (req, res, next) => {
+  ChatLogsModel.reset()
+  req.json({
+    code: 0,
+    message: 'SUCCESS',
+    comment: '정상 응답',
+  })
+})
+
+router.delete('/log/reset', async (req, res, next) => {
+  ChatLogsModel.reset()
+  req.json({
+    code: 0,
+    message: 'SUCCESS',
+    comment: '정상 응답',
+  })
+})
 
 module.exports = router
 
