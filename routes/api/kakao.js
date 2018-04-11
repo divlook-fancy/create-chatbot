@@ -114,7 +114,11 @@ router.get('/keyboard', async (req, res, next) => {
 router.post('/friend', (req, res, next) => {
   let { user_key } = req.body
   console.log(`친구추가: ${param.user_key}`)
-  res.json({ success: true })
+  res.json({
+    code: 0,
+    message: 'SUCCESS',
+    comment: '정상 응답',
+  })
 })
 
 // 친구 차단시
@@ -123,7 +127,11 @@ router.delete('/friend', (req, res, next) => {
   console.log(`친구차단: ${param.user_key}`)
   req.app.set(`event:${user_key}`, null)
   req.app.set(`eventClass:${user_key}`, null)
-  res.json({ success: true })
+  res.json({
+    code: 0,
+    message: 'SUCCESS',
+    comment: '정상 응답',
+  })
 })
 
 // 채팅방 나갔을 때
@@ -132,7 +140,11 @@ router.delete('/chat_room/:user_key', (req, res, next) => {
   console.log(`채팅방 나감: ${param.user_key}`)
   req.app.set(`event:${user_key}`, null)
   req.app.set(`eventClass:${user_key}`, null)
-  res.json({ success: true })
+  res.json({
+    code: 0,
+    message: 'SUCCESS',
+    comment: '정상 응답',
+  })
 });
 
 module.exports = router
