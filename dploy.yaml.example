@@ -6,5 +6,3 @@ server:
     pass: pw
     path:
         remote: chatbot-kakao/
-    include:
-        "pm2.config.js": ""
