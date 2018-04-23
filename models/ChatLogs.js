@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const sequelize = require('sequelize')
-const dbConfigPath = path.resolve(__dirname, '../config/db')
+const dbConfigPath = path.resolve(__dirname, '../config/db.json')
 const dbConfig = fs.existsSync(dbConfigPath)
   ? require(dbConfigPath)
   : {
