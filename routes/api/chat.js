@@ -78,7 +78,7 @@ router.get('/keyboard', async (req, res, next) => {
 // 친구 추가시
 router.post('/friend', (req, res, next) => {
   let { user_key } = req.body
-  console.log(`친구추가: ${param.user_key}`)
+  console.log(`친구추가: ${user_key}`)
   res.json({
     code: 0,
     message: 'SUCCESS',
@@ -89,7 +89,7 @@ router.post('/friend', (req, res, next) => {
 // 친구 차단시
 router.delete('/friend', (req, res, next) => {
   let { user_key } = req.body
-  console.log(`친구차단: ${param.user_key}`)
+  console.log(`친구차단: ${user_key}`)
   req.app.set(`event:${user_key}`, null)
   req.app.set(`eventClass:${user_key}`, null)
   res.json({
@@ -102,7 +102,7 @@ router.delete('/friend', (req, res, next) => {
 // 채팅방 나갔을 때
 router.delete('/chat_room/:user_key', (req, res, next) => {
   let { user_key } = req.params
-  console.log(`채팅방 나감: ${param.user_key}`)
+  console.log(`채팅방 나감: ${user_key}`)
   req.app.set(`event:${user_key}`, null)
   req.app.set(`eventClass:${user_key}`, null)
   res.json({
