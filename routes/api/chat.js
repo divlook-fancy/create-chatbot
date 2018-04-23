@@ -41,14 +41,6 @@ router.post('/message', async (req, res, next) => {
     content: param.content,
   })
 
-  setTimeout(() => {
-    res.json({
-      message: {
-        text: '5초 전에 보낸 메시지',
-      },
-    })
-  }, 5000)
-
   if (param.type === 'photo') {
     res.json({
       message: {
