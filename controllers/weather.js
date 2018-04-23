@@ -17,3 +17,17 @@ class Weather {
 
   }
 }
+
+/**
+ * 날씨
+ */
+const chatStart = ({ req, res, next }, { param, result }) => {
+  let reg = new RegExp(/weather|날씨/)
+  if (reg.test(param.content)) {
+    result.message.text = '날씨 기능은 아직 준비중이야...'
+    return result
+  }
+  return false
+}
+
+module.exports = chatStart

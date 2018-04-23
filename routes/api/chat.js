@@ -10,6 +10,8 @@ const controllers = [
   require('../../controllers/Help'),
   require('../../controllers/Hello'),
   require('../../controllers/StandardWeight'),
+  require('../../controllers/Weather'),
+  // Default는 항상 마지막
   require('../../controllers/Default'),
 ]
 const { ChatLogsModel } = require('../../models/ChatLogs')
