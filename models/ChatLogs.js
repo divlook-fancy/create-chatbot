@@ -1,6 +1,6 @@
 const path = require('path')
 const sequelize = require('sequelize')
-const dbConfig = require('../config/db.json')
+const dbConfig = require('../config/db')
 
 class ChatLogsModelClass {
   constructor(dbConfig) {

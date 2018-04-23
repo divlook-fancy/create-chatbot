@@ -6,6 +6,13 @@
 ## Run the app
 
 ```bash
+// install
+$ npm i
+
+// sqlite3
+$ npm i sqlite3 --no-save
+
+// start
 $ DEBUG=create-chatbot:* npm start
 ```
 

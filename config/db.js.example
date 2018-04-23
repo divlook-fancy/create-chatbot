@@ -1,0 +1,25 @@
+const path = require('path')
+// mysql
+module.exports = {
+  // require
+  dialect: 'mysql',
+  // mysql || mssql
+  database: 'database',
+  username: null,
+  password: null,
+  host: 'localhost',
+  port: 3306,
+  // not sqlite
+  timezone: 'Asia/Seoul',
+  // sqlite
+  storage: path.resolve(__dirname, './db.sqlite'),
+  // default option
+  operatorsAliases: false,
+  logging: false,
+  pool: {
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000,
+  },
+}
