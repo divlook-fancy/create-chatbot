@@ -91,8 +91,7 @@ router.get('/keyboard', async (req, res, next) => {
    * @type {TypeKeyboard}
    */
   let result = {
-    type: 'buttons',
-    buttons: ['안녕', '할 줄 아는게 뭐야?'],
+    type: 'text',
   }
   res.json(result)
 })
