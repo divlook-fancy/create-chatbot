@@ -11,9 +11,8 @@ const controllers = [
   require('../../controllers/Hello'),
   require('../../controllers/StandardWeight'),
   require('../../controllers/Weather'),
-  // Default는 항상 마지막
-  require('../../controllers/Default'),
 ]
+const defaultController = require('../../controllers/Default')
 const { ChatLogsModel } = require('../../models/ChatLogs')
 
 // Message 입력
@@ -51,6 +50,7 @@ router.post('/message', async (req, res, next) => {
     return
   }
 
+  controllers.push(defaultController)
   for (let i = 0, len = controllers.length; i < len; i++) {
     let el = controllers[i]({ req, res, next }, { param, result })
     if (el !== false) {
