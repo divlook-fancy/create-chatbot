@@ -1,17 +1,30 @@
 # Create Chatbot
 
-간단한 챗봇을 만들 수 있습니다.
+간단한 챗봇만들기입니다.
 현재 [카카오톡 플러스친구](https://github.com/plusfriend/auto_reply)만 지원합니다.
 
-## Run the app
+## Demo
+
+[Live Demo](https://pf.kakao.com/_xcwBxnC)
+
+## Install
+
+config/db.json 파일이 없으면 자동으로 sqlite3를 사용합니다.
 
 ```bash
 // install
 $ npm i
 
-// sqlite3
-$ npm i sqlite3 --no-save
+// db
+$ npm i --no-save sqlite3
+$ npm i --no-save pg pg-hstore
+$ npm i --no-save mysql2
+$ npm i --no-save tedious // MSSQL
+```
 
+## Run the app
+
+```bash
 // start
 $ DEBUG=create-chatbot:* npm start
 ```

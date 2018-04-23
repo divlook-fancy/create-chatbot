@@ -1,6 +1,21 @@
+const fs = require('fs')
 const path = require('path')
 const sequelize = require('sequelize')
-const dbConfig = require('../config/db')
+const dbConfigPath = path.resolve(__dirname, '../config/db')
+const dbConfig = fs.existsSync(dbConfigPath)
+  ? require(dbConfigPath)
+  : {
+      dialect: 'sqlite',
+      storage: path.resolve(__dirname, '../config/ChatLogs.sqlite'),
+      operatorsAliases: false,
+      logging: false,
+      pool: {
+        max: 5,
+        min: 0,
+        acquire: 30000,
+        idle: 10000,
+      },
+    }
 
 class ChatLogsModelClass {
   constructor(dbConfig) {
