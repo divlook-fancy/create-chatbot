@@ -7,29 +7,31 @@
 
 [Live Demo](https://pf.kakao.com/_xcwBxnC)
 
-## Install
+## Script
 
-config/db.json 파일이 없으면 자동으로 sqlite3를 사용합니다.
 
 ```bash
-// install
+# install
 $ npm i
 
-// db
-$ npm i --no-save sqlite3
-$ npm i --no-save pg pg-hstore
-$ npm i --no-save mysql2
-$ npm i --no-save tedious // MSSQL
-```
+# database
+# config/db.json 파일이 없으면 자동으로 sqlite3를 사용합니다.
+$ npm i --save sqlite3
+$ npm i --save pg pg-hstore
+$ npm i --save mysql2
+$ npm i --save tedious // MSSQL
 
-## Run the app
+# start
+$ npm run start
+$ npm run dev
 
-```bash
-// start
-$ DEBUG=create-chatbot:* npm start
+# unit test
+$ npm run test
 ```
 
 ## Reference
 
-- express
-- [카카오톡 플러스친구](https://github.com/plusfriend/auto_reply)
+- [express](http://expressjs.com/)
+- [kakaotalk-plusfriend](https://github.com/plusfriend/auto_reply)
+- [sequelize](http://docs.sequelizejs.com/)
+- [mocha](https://mochajs.org)
