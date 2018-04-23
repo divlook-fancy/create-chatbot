@@ -2,7 +2,8 @@
  * 안녕
  */
 const chatStart = ({ req, res, next }, { param, result }) => {
-  if (/안녕/.test(param.content)) {
+  let reg = new RegExp(/안녕|안뇽|hi|안녕하세요|반가워요?/, 'i')
+  if (reg.test(param.content)) {
     let randomText = [
       '안녕안녕안녕',
       '응 안녕!',
