@@ -13,9 +13,7 @@ class Weather {
   /**
    * 날씨
    */
-  constructor() {
-
-  }
+  constructor() {}
 }
 
 /**
@@ -30,4 +28,4 @@ const chatStart = ({ req, res, next }, { param, result }) => {
   return false
 }
 
-module.exports = chatStart
+module.exports = { chatStart }

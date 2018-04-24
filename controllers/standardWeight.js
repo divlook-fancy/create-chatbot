@@ -93,10 +93,10 @@ BMI : ${this.BMI}
   }
 }
 
-// new StandardWeight()
-
 const chatStart = ({ req, res, next }, { param, result }) => {
-  let eventCheck = /^standardWeight/.test(req.app.get(`event:${param.user_key}`))
+  let eventCheck = /^standardWeight/.test(
+    req.app.get(`event:${param.user_key}`)
+  )
   let contentCheck = /체중|몸무게|비만/.test(param.content)
 
   if (!eventCheck && contentCheck) {
@@ -108,13 +108,21 @@ const chatStart = ({ req, res, next }, { param, result }) => {
       req.app.set(`eventClass:${param.user_key}`, null)
       result.message.text = 'ㅇㅅㅇ'
       return result
-    } else if (/^standardWeight$/.test(req.app.get(`event:${param.user_key}`))) {
+    } else if (
+      /^standardWeight$/.test(req.app.get(`event:${param.user_key}`))
+    ) {
       return chatGetHeight({ req, res, next }, { param, result, eventClass })
-    } else if (/^standardWeight1$/.test(req.app.get(`event:${param.user_key}`))) {
+    } else if (
+      /^standardWeight1$/.test(req.app.get(`event:${param.user_key}`))
+    ) {
       return chatGetWeight({ req, res, next }, { param, result, eventClass })
-    } else if (/^standardWeight2$/.test(req.app.get(`event:${param.user_key}`))) {
+    } else if (
+      /^standardWeight2$/.test(req.app.get(`event:${param.user_key}`))
+    ) {
       return chatGetGender({ req, res, next }, { param, result, eventClass })
-    } else if (/^standardWeight3$/.test(req.app.get(`event:${param.user_key}`))) {
+    } else if (
+      /^standardWeight3$/.test(req.app.get(`event:${param.user_key}`))
+    ) {
       return chatGetResult({ req, res, next }, { param, result, eventClass })
     }
   }
@@ -191,7 +199,7 @@ const chatGetResult = ({ req, res, next }, { param, result, eventClass }) => {
   return result
 }
 
-const chatIsNaN = ({ param, result}) => {
+const chatIsNaN = ({ param, result }) => {
   let randomText = [
     `숫자를 입력해 달라구!!`,
     '숫자가 아니잖아!!',
@@ -202,4 +210,7 @@ const chatIsNaN = ({ param, result}) => {
   return randomText[randomIndex]
 }
 
-module.exports = chatStart
+module.exports = {
+  StandardWeight,
+  chatStart,
+}

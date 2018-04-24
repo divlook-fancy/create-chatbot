@@ -7,16 +7,16 @@
 const express = require('express')
 const router = express.Router()
 const controllers = [
-  require('../../controllers/Help'),
-  require('../../controllers/Hello'),
-  require('../../controllers/StandardWeight'),
-  require('../../controllers/Weather'),
+  require('../../controllers/Help').chatStart,
+  require('../../controllers/Hello').chatStart,
+  require('../../controllers/StandardWeight').chatStart,
+  require('../../controllers/Weather').chatStart,
 ]
 const defaultController = require('../../controllers/Default')
 const { ChatLogsModel } = require('../../models/ChatLogs')
 
 // Message 입력
-router.post('/message', async (req, res, next) => {
+const postMessage = async (req, res, next) => {
   let exit = false
 
   /**
@@ -50,7 +50,7 @@ router.post('/message', async (req, res, next) => {
     return
   }
 
-  controllers.push(defaultController)
+  controllers.push(defaultController.chatStart)
   for (let i = 0, len = controllers.length; i < len; i++) {
     let el = controllers[i]({ req, res, next }, { param, result })
     if (el !== false) {
@@ -62,10 +62,10 @@ router.post('/message', async (req, res, next) => {
 
   if (exit) return
   res.send(404)
-})
+}
 
 // 처음 진입시
-router.get('/keyboard', async (req, res, next) => {
+const getKeyboard = async (req, res, next) => {
   /**
    * @type {TypeKeyboard}
    */
@@ -73,10 +73,10 @@ router.get('/keyboard', async (req, res, next) => {
     type: 'text',
   }
   res.json(result)
-})
+}
 
 // 친구 추가시
-router.post('/friend', (req, res, next) => {
+const newFriend = (req, res, next) => {
   let { user_key } = req.body
   console.log(`친구추가: ${user_key}`)
   res.json({
@@ -84,10 +84,10 @@ router.post('/friend', (req, res, next) => {
     message: 'SUCCESS',
     comment: '정상 응답',
   })
-})
+}
 
 // 친구 차단시
-router.delete('/friend', (req, res, next) => {
+const rejectFriend = (req, res, next) => {
   let { user_key } = req.body
   console.log(`친구차단: ${user_key}`)
   req.app.set(`event:${user_key}`, null)
@@ -97,10 +97,10 @@ router.delete('/friend', (req, res, next) => {
     message: 'SUCCESS',
     comment: '정상 응답',
   })
-})
+}
 
 // 채팅방 나갔을 때
-router.delete('/chat_room/:user_key', (req, res, next) => {
+const closeRoom = (req, res, next) => {
   let { user_key } = req.params
   console.log(`채팅방 나감: ${user_key}`)
   req.app.set(`event:${user_key}`, null)
@@ -110,9 +110,9 @@ router.delete('/chat_room/:user_key', (req, res, next) => {
     message: 'SUCCESS',
     comment: '정상 응답',
   })
-})
+}
 
-router.get('/log/:offset/:limit', async (req, res, next) => {
+const logList = async (req, res, next) => {
   let result = await ChatLogsModel.table({
     limit: Number(req.params.limit),
     offset: Number(req.params.offset),
@@ -123,18 +123,35 @@ router.get('/log/:offset/:limit', async (req, res, next) => {
     message: 'SUCCESS',
     comment: '정상 응답',
   })
-})
+}
 
-router.delete('/log/reset', async (req, res, next) => {
+const logReset = async (req, res, next) => {
   ChatLogsModel.reset()
   res.json({
     code: 0,
     message: 'SUCCESS',
     comment: '정상 응답',
   })
-})
+}
 
-module.exports = router
+router.post('/message', postMessage)
+router.get('/keyboard', getKeyboard)
+router.post('/friend', newFriend)
+router.delete('/friend', rejectFriend)
+router.delete('/chat_room/:user_key', closeRoom)
+router.get('/log/:offset/:limit', logList)
+router.delete('/log/reset', logReset)
+
+module.exports = {
+  postMessage,
+  getKeyboard,
+  newFriend,
+  rejectFriend,
+  closeRoom,
+  logList,
+  logReset,
+  router,
+}
 
 /**
  * @typedef {object} TypeParam

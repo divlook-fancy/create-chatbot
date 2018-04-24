@@ -13,4 +13,4 @@ const chatStart = ({ req, res, next }, { param, result }) => {
   return result
 }
 
-module.exports = chatStart
+module.exports = { chatStart }
