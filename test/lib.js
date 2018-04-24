@@ -11,9 +11,20 @@ exports.data = {
   },
 }
 
-exports.server = {
-  req: {},
-  res: {},
+exports.serverData = {
+  req: {
+    body: {},
+    params: {},
+    query: {},
+    app: {
+      get: () => null,
+      set: () => null,
+    },
+  },
+  res: {
+    send: () => null,
+    json: () => {},
+  },
   next: () => true,
 }
 
@@ -30,10 +41,16 @@ exports.hasResult = (result, isExist = false) => {
       assert.ok(typeof result.keyboard === 'object', 'keyboard는 object')
       if ('type' in result.keyboard) {
         assert.ok(typeof result.keyboard.type === 'string', 'type은 string')
-        assert.ok(result.keyboard.type === 'buttons' ||  result.keyboard.type === 'text', 'type은 buttons | text')
+        assert.ok(
+          result.keyboard.type === 'buttons' || result.keyboard.type === 'text',
+          'type은 buttons | text'
+        )
         if (result.keyboard.type === 'buttons') {
           assert.ok(Array.isArray(result.keyboard.buttons), 'buttons는 array')
-          assert.ok(result.keyboard.buttons.length > 0, 'buttons는 비어있지 않는다.')
+          assert.ok(
+            result.keyboard.buttons.length > 0,
+            'buttons는 비어있지 않는다.'
+          )
           result.keyboard.buttons.map(btn => {
             assert.ok(typeof btn === 'string', 'button은 string')
           })
@@ -43,12 +60,7 @@ exports.hasResult = (result, isExist = false) => {
   }
 }
 
-exports.resultIsFalse = ({
-  content,
-  data = this.data,
-  fn,
-  isTrue = false,
-}) => {
+exports.resultIsFalse = ({ content, data = this.data, fn, isTrue = false }) => {
   let result,
     arr = []
   if (Array.isArray(content)) {
