@@ -31,7 +31,18 @@ $ npm run test
 
 ## Reference
 
-- [express](http://expressjs.com/)
+_API_
+
 - [kakaotalk-plusfriend](https://github.com/plusfriend/auto_reply)
+
+_library_
+
+- [express](http://expressjs.com/)
 - [sequelize](http://docs.sequelizejs.com/)
+
+_Test library_
+
 - [mocha](https://mochajs.org)
+- [should](shouldjs.github.io)
+- [sinon](http://sinonjs.org/)
+- [node-mocks-http](https://github.com/howardabrams/node-mocks-http)
