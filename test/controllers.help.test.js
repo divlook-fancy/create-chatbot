@@ -1,11 +1,11 @@
 const assert = require('assert')
 const { chatStart } = require('../controllers/Help')
-const { data, hasResult, resultIsFalse } = require('./lib')
+const { defaultData, hasResult, resultIsFalse } = require('./lib')
 
 describe('Controllers', () => {
   describe('Help', () => {
     describe('function chatStart', () => {
-      let result = chatStart({}, data)
+      let result = chatStart({}, defaultData)
       it('result 검사', () => {
         hasResult(result)
       })

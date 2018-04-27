@@ -1,6 +1,6 @@
 const assert = require('assert')
 
-exports.data = {
+const defaultData = {
   param: {
     content: '',
   },
@@ -11,7 +11,7 @@ exports.data = {
   },
 }
 
-exports.serverData = {
+const serverData = {
   req: {
     body: {},
     params: {},
@@ -28,7 +28,7 @@ exports.serverData = {
   next: () => true,
 }
 
-exports.hasResult = (result, isExist = false) => {
+const hasResult = (result, isExist = false) => {
   assert.ok(
     typeof result === 'object' || result === false,
     'object 또는 false 반환한다.'
@@ -60,7 +60,7 @@ exports.hasResult = (result, isExist = false) => {
   }
 }
 
-exports.resultIsFalse = ({ content, data = this.data, fn, isTrue = false }) => {
+const resultIsFalse = ({ content, data = defaultData, fn, isTrue = false }) => {
   let result,
     arr = []
   if (Array.isArray(content)) {
@@ -75,4 +75,11 @@ exports.resultIsFalse = ({ content, data = this.data, fn, isTrue = false }) => {
     if (isTrue) assert.notEqual(result, false, keyword)
     else assert.equal(result, false, keyword)
   })
+}
+
+module.exports = {
+  defaultData,
+  serverData,
+  hasResult,
+  resultIsFalse,
 }
