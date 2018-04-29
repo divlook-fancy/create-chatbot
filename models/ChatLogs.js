@@ -44,15 +44,13 @@ class ChatLogsModelClass {
         type: sequelize.STRING,
         defaultValue: '',
       },
-      reg_date: {
-        type: sequelize.DATE,
-        defaultValue: new Date(),
-      },
     }
   }
   static modelOption() {
     return {
-      timestamps: false,
+      createdAt: 'reg_date',
+      deletedAt: false,
+      updatedAt: false,
     }
   }
   connect() {
